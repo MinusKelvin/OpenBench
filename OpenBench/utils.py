@@ -500,67 +500,93 @@ def update_test(request, machine):
 
     # Send update to webhook, if it exists
     if test.finished and os.path.exists('webhook'):
-        with open('webhook') as webhook_file:
-            webhook = webhook_file.readlines()[0]
+        lower, elo, upper = OpenBench.stats.ELO([test.losses, test.draws, test.wins])
+        error = max(upper - elo, elo - lower)
+        elo   = OpenBench.templatetags.mytags.twoDigitPrecision(elo)
+        error = OpenBench.templatetags.mytags.twoDigitPrecision(error)
+        h0 = OpenBench.templatetags.mytags.twoDigitPrecision(test.elolower)
+        h1 = OpenBench.templatetags.mytags.twoDigitPrecision(test.eloupper)
 
-            lower, elo, upper = OpenBench.stats.ELO([test.losses, test.draws, test.wins])
-            error = max(upper - elo, elo - lower)
-            elo   = OpenBench.templatetags.mytags.twoDigitPrecision(elo)
-            error = OpenBench.templatetags.mytags.twoDigitPrecision(error)
-            h0 = OpenBench.templatetags.mytags.twoDigitPrecision(test.elolower)
-            h1 = OpenBench.templatetags.mytags.twoDigitPrecision(test.eloupper)
-            tokens = test.devoptions.split(' ')
-            threads = tokens[0].split('=')[1]
-            hash = tokens[1].split('=')[1]
-            outcome = 'passed' if passed else 'failed'
-            if test.test_mode == 'GAMES':
-                mode_string = f'{test.max_games} games'
-            else:
-                mode_string = f'SPRT [{h0}, {h1}]'
-            if passed:
-                color = 0x366ae2 if test.elolower + test.eloupper < 0 else 0x37F769
-            elif swins < slosses:
-                color = 0xFA4E4E
-            else:
-                color = 0xFEFF58
+        tokens = test.dev_options.split(' ')
+        dev_threads = ([
+            opt.partition('=')[2] for opt in tokens if opt.startswith("Threads=")
+        ] + ["None"])[0]
+        dev_hash = ([
+            opt.partition('=')[2] for opt in tokens if opt.startswith("Hash=")
+        ] + ["None"])[0]
 
-            requests.post(webhook, json={
-                'username': test.engine,
-                'embeds': [{
-                    'title': f'Test `{test.dev.name}` vs `{test.base.name}` {outcome}',
-                    'url': request.build_absolute_uri(f'/test/{testid}'),
-                    'color': color,
-                    'author': { "name": test.author },
-                    'fields': [
-                        {
-                            'name': 'Configuration',
-                            'value': f'{test.timecontrol}s Threads={threads} Hash={hash}MB',
-                        },
-                        {
-                            'name': 'Mode',
-                            'value': mode_string,
-                        },
-                        {
-                            'name': 'Wins',
-                            'value': f'{test.wins}',
-                            'inline': True,
-                        },
-                        {
-                            'name': 'Losses',
-                            'value': f'{test.losses}',
-                            'inline': True,
-                        },
-                        {
-                            'name': 'Draws',
-                            'value': f'{test.draws}',
-                            'inline': True,
-                        },
-                        {
-                            'name': 'Elo',
-                            'value': f'{elo} ± {error} (95%)',
-                        },
-                    ]
+        tokens = test.base_options.split(' ')
+        base_threads = ([
+            opt.partition('=')[2] for opt in tokens if opt.startswith("Threads=")
+        ] + ["None"])[0]
+        base_hash = ([
+            opt.partition('=')[2] for opt in tokens if opt.startswith("Hash=")
+        ] + ["None"])[0]
+
+        outcome = 'passed' if test.passed else 'failed'
+        if test.test_mode == 'GAMES':
+            mode_string = f'{test.max_games} games'
+        else:
+            mode_string = f'SPRT [{h0}, {h1}]'
+        if test.passed:
+            color = 0x366ae2 if test.elolower + test.eloupper < 0 else 0x37F769
+        elif test.wins < test.losses:
+            color = 0xFA4E4E
+        else:
+            color = 0xFEFF58
+
+        webhook_payload = {
+            'username': test.dev_engine if test.dev_engine == test.base_engine
+                else f'{test.dev_engine} vs {test.base_engine}',
+            'embeds': [{
+                'title': f'Test `{test.dev.name}` vs `{test.base.name}` {outcome}',
+                'url': request.build_absolute_uri(f'/test/{test_id}'),
+                'color': color,
+                'author': { "name": test.author },
+                'fields': [
+                    {
+                        'name': 'Dev Config',
+                        'value': f'{test.dev_time_control}s Threads={dev_threads} Hash={dev_hash}MB',
+                        'inline': True,
+                    },
+                    {
+                        'name': 'Base Config',
+                        'value': f'{test.base_time_control}s Threads={base_threads} Hash={base_hash}MB',
+                        'inline': True,
+                    },
+                    {
+                        'name': 'Mode',
+                        'value': mode_string,
+                    },
+                    {
+                        'name': 'Wins',
+                        'value': f'{test.wins}',
+                        'inline': True,
+                    },
+                    {
+                        'name': 'Losses',
+                        'value': f'{test.losses}',
+                        'inline': True,
+                    },
+                    {
+                        'name': 'Draws',
+                        'value': f'{test.draws}',
+                        'inline': True,
+                    },
+                    {
+                        'name': 'Elo',
+                        'value': f'{elo} ± {error} (95%)',
+                    },
+                ] + test.use_penta * [{
+                    'name': 'Pentanomial (0-2)',
+                    'value': f'{test.LL}, {test.LD}, {test.DD}, {test.DW}, {test.WW}'
                 }]
-            })
+            }]
+        }
+
+        with open('webhook') as webhook_file:
+            for webhook in webhook_file:
+                if webhook.startswith("http"):
+                    requests.post(webhook.strip(), json=webhook_payload)
 
     return [{}, { 'stop' : True }][test.finished]
