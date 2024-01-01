@@ -1,7 +1,7 @@
 {
     "private" : false,
     "nps"     : 1066000,
-    "source"  : "https://github.com/dsekercioglu/blackmarlin",
+    "source"  : "https://github.com/jnlt3/blackmarlin",
 
     "build" : {
         "path"      : "",
