@@ -104,18 +104,18 @@
             <hr>
 
             <ul>
-                <li class="header">Support</li>
-                <li><a href="{{config.client_repo_url}}"><i class="fa-brands fa-github fa-fw"></i> OpenBench</a></li>
-                <li><a href="https://minuskelvin.net/discord"><i class="fa-brands fa-discord fa-fw"></i> Discord</a></li>
+                <li class="header">Engines</li>
+                {% for engine, data in config.engines.items %}
+                    <li><a href="{{data.source}}">{{engine}}</a></li>
+                {% endfor %}
             </ul>
 
             <hr>
 
             <ul>
-                <li class="header">Engines</li>
-                {% for engine, data in config.engines.items %}
-                    <li><a href="{{data.source}}">{{engine}}</a></li>
-                {% endfor %}
+                <li class="header">Support</li>
+                <li><a href="{{config.client_repo_url}}/tree/{{config.git_hash}}"><i class="fa-brands fa-github fa-fw"></i> Ver. {{config.git_shorthash}}</a></li>
+                <li><a href="https://minuskelvin.net/discord"><i class="fa-brands fa-discord fa-fw"></i> Discord</a></li>
             </ul>
 
             <hr>

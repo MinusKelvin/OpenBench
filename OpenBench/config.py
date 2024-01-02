@@ -22,6 +22,7 @@ import json
 import os
 import sys
 import traceback
+import subprocess
 
 from OpenSite.settings import PROJECT_PATH
 
@@ -39,6 +40,10 @@ def create_openbench_config():
     config_dict['engines'] = {
         engine : load_engine_config(engine) for engine in config_dict['engines']
     }
+
+    git_hash = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode('ascii').strip()
+    config_dict['git_hash'] = git_hash
+    config_dict['git_shorthash'] = git_hash[:7]
 
     return config_dict
 
