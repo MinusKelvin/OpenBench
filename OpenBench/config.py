@@ -41,7 +41,10 @@ def create_openbench_config():
         engine : load_engine_config(engine) for engine in config_dict['engines']
     }
 
-    git_hash = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode('ascii').strip()
+    git_hash = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"],
+        cwd=os.path.dirname(os.path.realpath(__file__))
+    ).decode('ascii').strip()
     config_dict['git_hash'] = git_hash
     config_dict['git_shorthash'] = git_hash[:7]
 
