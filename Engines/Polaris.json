@@ -1,6 +1,6 @@
 {
     "private" : false,
-    "nps"     : 4050590,
+    "nps"     : 2057000,
     "source"  : "https://github.com/Ciekce/Polaris",
 
     "build" : {
@@ -70,6 +70,20 @@
             "book_name" : "Pohl.epd",
             "win_adj"   : "movecount=3 score=400",
             "draw_adj"  : "movenumber=40 movecount=8 score=10"
+        }
+    },
+
+    "datagen_presets" : {
+
+        "default" : {
+            "win_adj"       : "None",
+            "draw_adj"      : "None",
+            "workload_size" : 128
+        },
+
+        "40k Nodes" : {
+            "both_options"      : "Threads=1 Hash=16",
+            "both_time_control" : "N=40000"
         }
     }
 }

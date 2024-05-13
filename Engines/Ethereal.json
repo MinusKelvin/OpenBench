@@ -1,6 +1,6 @@
 {
     "private" : false,
-    "nps"     : 1148000,
+    "nps"     : 975000,
     "source"  : "https://github.com/AndyGrant/Ethereal",
 
     "build" : {
@@ -72,6 +72,20 @@
         "VLTC" : {
             "dev_options"      : "Threads=1 Hash=128",
             "dev_time_control" : "180.0+1.80"
+        }
+    },
+
+    "datagen_presets" : {
+
+        "default" : {
+            "win_adj"       : "None",
+            "draw_adj"      : "None",
+            "workload_size" : 128
+        },
+
+        "40k Nodes" : {
+            "both_options"      : "Threads=1 Hash=16",
+            "both_time_control" : "N=40000"
         }
     }
 }
