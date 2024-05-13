@@ -20,24 +20,11 @@
     ],
 
     "engines" : [
-        "4ku",
-        "Berserk",
-        "Bit-Genie",
-        "BlackMarlin",
-        "Demolito",
-        "Drofa",
-        "Ethereal",
-        "FabChess",
-        "Halogen",
-        "Igel",
-        "Koivisto",
-        "Laser",
-        "RubiChess",
-        "Seer",
-        "Stash",
-        "Stockfish",
-        "Weiss",
-        "Winter",
-        "Zahak"
+        "ice4",
+        "Tantabus",
+        "Frozenight",
+        "Cheers",
+        "Trinket",
+        "BoyChesser"
     ]
 }
