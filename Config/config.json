@@ -1,7 +1,7 @@
 {
     "client_version"  : 23,
-    "client_repo_url" : "https://github.com/MinusKelvin/OpenBench",
-    "client_repo_ref" : "customized",
+    "client_repo_url" : "https://github.com/AndyGrant/OpenBench",
+    "client_repo_ref" : "master",
 
     "use_cross_approval"          : false,
     "require_login_to_view"       : false,
@@ -20,12 +20,24 @@
     ],
 
     "engines" : [
+        "4ku",
+        "Berserk",
+        "Bit-Genie",
         "BlackMarlin",
-        "ice4",
-        "Tantabus",
-        "Frozenight",
-        "Cheers",
-        "Trinket",
-        "BoyChesser"
+        "Demolito",
+        "Drofa",
+        "Ethereal",
+        "FabChess",
+        "Halogen",
+        "Igel",
+        "Koivisto",
+        "Laser",
+        "RubiChess",
+        "Seer",
+        "Stash",
+        "Stockfish",
+        "Weiss",
+        "Winter",
+        "Zahak"
     ]
 }

@@ -1,20 +1,20 @@
 {
     "private" : false,
-    "nps"     : 1066000,
-    "source"  : "https://github.com/jnlt3/blackmarlin",
+    "nps"     : 1700000,
+    "source"  : "https://github.com/mhouppin/stash-bot",
 
     "build" : {
-        "path"      : "",
-        "compilers" : ["cargo>=1.57.0"],
-        "cpuflags"  : ["AVX2", "FMA", "POPCNT"],
+        "path"      : "src",
+        "compilers" : ["gcc", "clang"],
+        "cpuflags"  : ["POPCNT"],
         "systems"   : ["Windows", "Linux"]
     },
 
     "test_presets" : {
 
         "default" : {
-            "base_branch"     : "main",
-            "book_name"       : "Pohl.epd",
+            "base_branch"     : "master",
+            "book_name"       : "4moves_noob.epd",
             "test_bounds"     : "[0.00, 5.00]",
             "test_confidence" : "[0.1, 0.05]",
             "win_adj"         : "movecount=3 score=400",
@@ -22,7 +22,7 @@
         },
 
         "STC" : {
-            "both_options"      : "Threads=1 Hash=8",
+            "both_options"      : "Threads=1 Hash=16",
             "both_time_control" : "8.0+0.08",
             "workload_size"     : 8
         },
@@ -49,7 +49,7 @@
     "tune_presets" : {
 
         "default" : {
-            "book_name" : "Pohl.epd",
+            "book_name" : "4moves_noob.epd",
             "win_adj"   : "movecount=3 score=400",
             "draw_adj"  : "movenumber=40 movecount=8 score=10"
         }
