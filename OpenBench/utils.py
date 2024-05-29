@@ -505,7 +505,7 @@ def update_test(request, machine):
 
     # Send update to webhook, if it exists
     if test.finished and os.path.exists('webhook'):
-        lower, elo, upper = OpenBench.stats.ELO([test.losses, test.draws, test.wins])
+        lower, elo, upper = OpenBench.stats.Elo([test.LL, test.LD, test.DD, test.DW, test.WW])
         error = max(upper - elo, elo - lower)
         elo   = OpenBench.templatetags.mytags.twoDigitPrecision(elo)
         error = OpenBench.templatetags.mytags.twoDigitPrecision(error)
