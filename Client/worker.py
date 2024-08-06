@@ -54,7 +54,7 @@ from genfens import create_genfens_opening_book
 
 ## Basic configuration of the Client. These timeouts can be changed at will
 
-CLIENT_VERSION   = 28 # Client version to send to the Server
+CLIENT_VERSION   = 29 # Client version to send to the Server
 TIMEOUT_HTTP     = 30 # Timeout in seconds for HTTP requests
 TIMEOUT_ERROR    = 10 # Timeout in seconds when any errors are thrown
 TIMEOUT_WORKLOAD = 30 # Timeout in seconds between workload requests
@@ -116,7 +116,7 @@ class Configuration:
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
         # Ensure the folder structure for ease of coding
-        for folder in ['PGNs', 'Engines', 'Networks', 'Books']:
+        for folder in ['PGNs', 'Engines', 'Networks', 'Books', 'StdErr']:
             if not os.path.isdir(folder):
                 os.mkdir(folder)
 
@@ -477,7 +477,7 @@ class Cutechess:
 
         # Join options together in the Cutechess format
         options = ' option.'.join([''] + re.findall(r'"[^"]*"|\S+', options))
-        return '-engine dir=Engines/ cmd=./%s proto=uci %s%s name=%s-%s' % (command, control, options, engine, branch)
+        return '-engine dir=Engines/ cmd=./%s proto=uci %s%s name=%s-%s stderr=StdErr/%s' % (command, control, options, engine, branch, command)
 
     @staticmethod
     def pgnout_settings(config, timestamp, cutechess_idx):
@@ -750,6 +750,10 @@ def cleanup_client():
     for file in os.listdir('Networks'):
         if file_age(os.path.join('Networks', file)) > SECONDS_PER_MONTH:
             os.remove(os.path.join('Networks', file))
+
+    for file in os.listdir('StdErr'):
+        if file_age(os.path.join('StdErr', file)) > SECONDS_PER_MONTH:
+            os.remove(os.path.join('StdErr', file))
 
 def validate_syzygy_exists(config, K):
 
