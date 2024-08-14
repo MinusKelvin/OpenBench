@@ -64,6 +64,12 @@
             "both_time_control" : "60.0+0.6",
             "test_max_games"    : 10000,
             "workload_size"     : 4
+        },
+
+        "Fixed Nodes" : {
+            "both_options"      : "Threads=1 Hash=8",
+            "both_time_control" : "N=50000",
+            "workload_size"     : 32
         }
     },
 
