@@ -117,7 +117,7 @@
         <!-- Copy Button: Copy the current results statblock -->
         {% if type == "TEST" or type == "DATAGEN" %}
             <div class="anchor-container">
-                <a class="mt-1 anchorbutton btn-blue" onclick="copy_text('long-statblock', true)">Copy Stat Block</a>
+                <a class="mt-1 anchorbutton btn-blue" onclick="copy_text('long-statblock', true, '{{workload|git_diff_text}}\n')">Copy Stat Block</a>
             </div>
         {% endif %}
 

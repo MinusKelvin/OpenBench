@@ -1,8 +1,8 @@
 
-function copy_text(element_id, keep_url) {
+function copy_text(element_id, keep_url, extra) {
 
-    var text = document.getElementById(element_id).innerHTML;
-    text = text.replace(/<br>/g, "\n");
+    var text = typeof extra === "string" ? extra : "";
+    text += document.getElementById(element_id).innerHTML.replace(/<br>/g, "\n");
 
     if (keep_url)
         text += "\n" + window.location.href;
