@@ -5,7 +5,7 @@
 
     "build" : {
         "path"      : "",
-        "compilers" : ["cargo>=1.78.0"],
+        "compilers" : ["cargo>=1.80.0"],
         "cpuflags"  : [],
         "systems"   : ["Linux"]
     },
@@ -13,7 +13,7 @@
     "test_presets" : {
         "default" : {
             "base_branch"     : "main",
-            "book_name"       : "4moves_noob.epd",
+            "book_name"       : "Pohl.epd",
             "test_bounds"     : "[0.00, 5.00]",
             "test_confidence" : "[0.1, 0.05]",
             "win_adj"         : "movecount=3 score=400",
@@ -67,6 +67,7 @@
         },
 
         "Fixed Nodes" : {
+            "both_branch"       : "main",
             "both_options"      : "Threads=1 Hash=8",
             "both_time_control" : "N=50000",
             "workload_size"     : 32
@@ -75,9 +76,11 @@
 
     "tune_presets" : {
         "default" : {
-            "book_name" : "4moves_noob.epd",
-            "win_adj"   : "movecount=3 score=400",
-            "draw_adj"  : "movenumber=40 movecount=8 score=10"
+            "options"     : "Threads=1 Hash=64",
+            "timecontrol" : "60.0+0.6",
+            "book_name"   : "Pohl.epd",
+            "win_adj"     : "movecount=3 score=400",
+            "draw_adj"    : "movenumber=40 movecount=8 score=10"
         }
     }
 }

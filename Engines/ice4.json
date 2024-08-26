@@ -76,9 +76,12 @@
 
     "tune_presets" : {
         "default" : {
-            "book_name" : "4moves_noob.epd",
-            "win_adj"   : "movecount=3 score=400",
-            "draw_adj"  : "movenumber=40 movecount=8 score=10"
+            "options"     : "Threads=1 Hash=64",
+            "timecontrol" : "60.0+0.6",
+            "book_name"   : "Pohl.epd",
+            "win_adj"     : "None",
+            "draw_adj"    : "None",
+            "syzygy_adj"  : "Disabled"
         }
     }
 }
