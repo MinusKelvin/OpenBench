@@ -40,8 +40,8 @@
         },
 
         "SMP LTC" : {
-            "both_options"      : "Threads=4 Hash=128",
-            "both_time_control" : "45.0+0.45",
+            "both_options"      : "Threads=8 Hash=128",
+            "both_time_control" : "25.0+0.25",
             "workload_size"     : 4
         },
 
