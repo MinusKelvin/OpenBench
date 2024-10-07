@@ -26,6 +26,7 @@ import os
 import random
 import re
 import requests
+import traceback
 
 from django.contrib.auth import authenticate
 from django.core.files.base import ContentFile
@@ -592,6 +593,9 @@ def update_test(request, machine):
         with open('webhook') as webhook_file:
             for webhook in webhook_file:
                 if webhook.startswith("http"):
-                    requests.post(webhook.strip(), json=webhook_payload)
+                    try:
+                        requests.post(webhook.strip(), json=webhook_payload).raise_for_status()
+                    except:
+                        traceback.print_exc()
 
     return [{}, { 'stop' : True }][test.finished]
