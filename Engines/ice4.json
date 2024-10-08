@@ -49,6 +49,7 @@
             "both_options"      : "Threads=1 Hash=8",
             "both_time_control" : "8.0+0.08",
             "test_bounds"       : "[-5.00, 0.00]",
+            "test_confidence"   : "[0.05, 0.05]",
             "workload_size"     : 8
         },
 
@@ -56,6 +57,7 @@
             "both_options"      : "Threads=1 Hash=64",
             "both_time_control" : "60.0+0.6",
             "test_bounds"       : "[-5.00, 0.00]",
+            "test_confidence"   : "[0.05, 0.05]",
             "workload_size"     : 4
         },
 
