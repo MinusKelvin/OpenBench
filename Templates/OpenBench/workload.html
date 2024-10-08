@@ -176,6 +176,11 @@
                         </div>
                     {% endif %}
 
+                    <div class="row">
+                        <label for="note">Note</label>
+                        <textarea id="note" name="note">{{workload.note}}</textarea>
+                    </div>
+
                     <!-- Edit Button: For Approvers or Test Authors -->
                     {% if profile.approver or profile.user.username == workload.author %}
                         <input class="anchorbutton btn-blue w-100" type="submit" name="submit" value="Modify">

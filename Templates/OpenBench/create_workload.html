@@ -199,6 +199,10 @@
                 <h3> General Settings </h3>
 
                 <div class="row">
+                    <label for="note"> Note </label> <input id="note" name="note">
+                </div>
+
+                <div class="row">
                     <label for="book_name"> Opening Book </label> <select id="book_name" name="book_name">
                     <option selected value="NONE"> None </option>
                     {% for name, data in config.books.items %}

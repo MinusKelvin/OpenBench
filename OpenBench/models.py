@@ -20,6 +20,7 @@
 
 from django.db.models import CharField, IntegerField, BooleanField, FloatField
 from django.db.models import JSONField, ForeignKey, DateTimeField, OneToOneField
+from django.db.models import TextField
 from django.db.models import CASCADE, PROTECT, Model
 from django.contrib.auth.models import User
 
@@ -92,6 +93,7 @@ class Test(Model):
     # Misc information
     author      = CharField(max_length=64)
     upload_pgns = CharField(max_length=16, default='FALSE')
+    note        = TextField(default="")
 
     # Opening book settings
     book_name  = CharField(max_length=32)
