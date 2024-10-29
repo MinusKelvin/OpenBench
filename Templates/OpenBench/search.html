@@ -29,8 +29,7 @@
 
 {% block content %}
     {% if not tests %}
-        <form method="POST" action="/search/">
-            {% csrf_token %}
+        <form method="GET" action="/search/" id="search-form">
             <div class="form">
                 <div class="col">
                     <div class="row">

@@ -319,56 +319,56 @@ def greens(request, page=1):
 
 def search(request):
 
-    if request.method == 'GET':
+    if 'author' not in request.GET:
         return render(request, 'search.html', {})
 
     tests = Test.objects.all()
 
     # Optional Selection box filters
 
-    if request.POST['author']:
-        tests = tests.filter(author=request.POST['author'])
+    if request.GET['author']:
+        tests = tests.filter(author=request.GET['author'])
 
-    if request.POST['engine']:
-        tests = tests.filter(Q(base_engine=request.POST['engine']) | Q(dev_engine=request.POST['engine']))
+    if request.GET['engine']:
+        tests = tests.filter(Q(base_engine=request.GET['engine']) | Q(dev_engine=request.GET['engine']))
 
-    if request.POST['opening-book']:
-        tests = tests.filter(book_name=request.POST['opening-book'])
+    if request.GET['opening-book']:
+        tests = tests.filter(book_name=request.GET['opening-book'])
 
-    if request.POST['test-mode']:
-        tests = tests.filter(test_mode=request.POST['test-mode'])
+    if request.GET['test-mode']:
+        tests = tests.filter(test_mode=request.GET['test-mode'])
 
-    if request.POST['syzygy-wdl']:
-        tests = tests.filter(syzygy_wdl=request.POST['syzygy-wdl'])
+    if request.GET['syzygy-wdl']:
+        tests = tests.filter(syzygy_wdl=request.GET['syzygy-wdl'])
 
     # Checkboxes for Test statuses
 
-    if 'show-greens' not in request.POST:
+    if 'show-greens' not in request.GET:
         tests = tests.annotate(x=F('elolower') + F('eloupper')).exclude(x__gte=0, passed=True)
 
-    if 'show-yellows' not in request.POST:
+    if 'show-yellows' not in request.GET:
         tests = tests.exclude(failed=True, wins__gte=F('losses'))
 
-    if 'show-reds' not in request.POST:
+    if 'show-reds' not in request.GET:
         tests = tests.exclude(failed=True, wins__lt=F('losses'))
 
-    if 'show-blues' not in request.POST:
+    if 'show-blues' not in request.GET:
         tests = tests.annotate(x=F('elolower') + F('eloupper')).exclude(x__lt=0, passed=True)
 
-    if 'show-stopped' not in request.POST:
+    if 'show-stopped' not in request.GET:
         tests = tests.exclude(passed=False, failed=False)
 
-    if 'show-deleted' not in request.POST:
+    if 'show-deleted' not in request.GET:
         tests = tests.exclude(deleted=True)
 
     # Remaining filtering is hard to do with standard Django queries
 
     filtered = []
-    keywords = request.POST['keywords'].upper().split()
+    keywords = request.GET.get('keywords', '').upper().split()
 
-    tc_type   = request.POST['tc-type']
-    tc_value  = request.POST['tc-value-input']
-    tc_select = request.POST['tc-value-select']
+    tc_type   = request.GET['tc-type']
+    tc_value  = request.GET['tc-value-input']
+    tc_select = request.GET['tc-value-select']
 
     # Attempt to parse the time control
 
@@ -392,8 +392,8 @@ def search(request):
         max_threads  = max(int(dev_threads), int(base_threads))
 
         # Extract requsted configuration
-        select_value = request.POST['threads-select']
-        input_value  = int(request.POST['threads-input'])
+        select_value = request.GET['threads-select']
+        input_value  = int(request.GET['threads-input'])
 
         # Requested Threads value did not match observed value
         if select_value == '='  and max_threads != input_value: continue
