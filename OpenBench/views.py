@@ -361,10 +361,17 @@ def search(request):
     if 'show-deleted' not in request.GET:
         tests = tests.exclude(deleted=True)
 
+    # Keyword filtering
+
+    keywords = request.GET.get('keywords', '').split()
+    query = Q()
+    for kw in keywords:
+        query = query | Q(dev__name__icontains=kw)
+    tests = tests.filter(query)
+
     # Remaining filtering is hard to do with standard Django queries
 
     filtered = []
-    keywords = request.GET.get('keywords', '').upper().split()
 
     tc_type   = request.GET['tc-type']
     tc_value  = request.GET['tc-value-input']
@@ -381,10 +388,6 @@ def search(request):
     # Filter out tests
 
     for test in tests:
-
-        # None of the keywords appear in the dev branch name
-        if keywords and not any(x in test.dev.name.upper() for x in keywords):
-            continue
 
         # Determine the max number of threads that either engine used
         dev_threads  = OpenBench.utils.extract_option(test.dev_options, 'Threads')
