@@ -126,8 +126,8 @@ def filter_valid_workloads(request, machine):
 
     # Prioritize new tests
     min_games = min(candidates, key=lambda x: x.games).games
-    if min_games < 1024:
-        candidates = [test for test in candidates if test.games == min_games]
+    if min_games < 1000:
+        candidates = [test for test in candidates if test.games < 1000]
 
     return candidates, has_focus
 
