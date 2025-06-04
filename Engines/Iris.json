@@ -7,7 +7,7 @@
         "path"      : "",
         "compilers" : ["g++"],
         "cpuflags"  : [],
-        "systems"   : ["Linux"]
+        "systems"   : ["Linux", "Windows"]
     },
 
     "test_presets" : {
