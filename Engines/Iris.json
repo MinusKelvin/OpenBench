@@ -1,11 +1,11 @@
 {
     "private" : false,
-    "nps"     : 2340000,
-    "source"  : "https://github.com/MinusKelvin/frostburn",
+    "nps"     : 3000000,
+    "source"  : "https://github.com/citrus610/iris",
 
     "build" : {
         "path"      : "",
-        "compilers" : ["cargo>=1.80.0"],
+        "compilers" : ["g++"],
         "cpuflags"  : [],
         "systems"   : ["Linux"]
     },
@@ -49,15 +49,6 @@
             "both_options"      : "Threads=1 Hash=8",
             "both_time_control" : "8.0+0.08",
             "test_bounds"       : "[-5.00, 0.00]",
-            "test_confidence"   : "[0.05, 0.05]",
-            "workload_size"     : 8
-        },
-
-        "LTC Regression" : {
-            "both_options"      : "Threads=1 Hash=64",
-            "both_time_control" : "60.0+0.6",
-            "test_bounds"       : "[-5.00, 0.00]",
-            "test_confidence"   : "[0.05, 0.05]",
             "workload_size"     : 8
         },
 
@@ -73,13 +64,6 @@
             "both_time_control" : "60.0+0.6",
             "test_max_games"    : 10000,
             "workload_size"     : 4
-        },
-
-        "Fixed Nodes" : {
-            "both_branch"       : "main",
-            "both_options"      : "Threads=1 Hash=8",
-            "both_time_control" : "N=50000",
-            "workload_size"     : 32
         }
     },
 
