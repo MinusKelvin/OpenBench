@@ -13,7 +13,7 @@
     "test_presets" : {
         "default" : {
             "base_branch"     : "main",
-            "book_name"       : "4moves_noob.epd",
+            "book_name"       : "UHO_Lichess_4852_v1.epd",
             "test_bounds"     : "[0.00, 5.00]",
             "test_confidence" : "[0.1, 0.05]",
             "win_adj"         : "None",
@@ -64,6 +64,7 @@
         "STC Elo" : {
             "both_options"      : "Threads=1 Hash=8",
             "both_time_control" : "8.0+0.08",
+            "book_name"         : "4moves_noob.epd",
             "test_max_games"    : 10000,
             "workload_size"     : 8
         },
@@ -71,6 +72,7 @@
         "LTC Elo" : {
             "both_options"      : "Threads=1 Hash=64",
             "both_time_control" : "60.0+0.6",
+            "book_name"         : "4moves_noob.epd",
             "test_max_games"    : 10000,
             "workload_size"     : 4
         }
